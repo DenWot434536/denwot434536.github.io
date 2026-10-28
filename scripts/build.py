@@ -68,10 +68,19 @@ def footer(prefix=""):
     return f'''<footer class="site-footer"><div class="shell">
       <div class="footer-main"><div class="footer-brand">{brand(prefix)}<p>Простая еда, красивые моменты<br>и немного вдохновения на каждый день.</p></div>
       <div class="footer-links"><div><span class="footer-label">НАВИГАЦИЯ</span><a href="{prefix}index.html#recipes">Все рецепты</a><a href="{prefix}index.html#categories">Категории</a><a href="{prefix}about.html">О проекте</a></div>
-      <div><span class="footer-label">ПОЛЕЗНОЕ</span><a href="{prefix}privacy.html">Конфиденциальность</a><a href="https://github.com/DenWot434536/denwot434536.github.io/issues" target="_blank" rel="noopener noreferrer">Связаться с нами {icon("up-right")}</a></div></div>
+      <div><span class="footer-label">ПОЛЕЗНОЕ</span><a href="{prefix}privacy.html">Конфиденциальность</a><button class="privacy-settings" type="button" data-consent-open>Настройки аналитики</button><a href="https://github.com/DenWot434536/denwot434536.github.io/issues" target="_blank" rel="noopener noreferrer">Связаться с нами {icon("up-right")}</a></div></div>
       <div class="footer-note"><span class="footer-sun">✳</span><span>ГОТОВЬТЕ<br>В СВОЁ УДОВОЛЬСТВИЕ</span></div></div>
       <div class="footer-bottom"><span>© {date.today().year} Ложка. Сделано с теплом.</span><span>ВСТРЕТИМСЯ ЗА СТОЛОМ ♡</span></div>
     </div></footer>'''
+
+
+def consent_banner(prefix=""):
+    return f'''<section class="consent-banner" id="consent-banner" role="region" aria-labelledby="consent-title" aria-describedby="consent-description" aria-live="polite" hidden>
+      <h2 id="consent-title" tabindex="-1">Настройки аналитики</h2>
+      <p id="consent-description">С вашего разрешения мы используем Яндекс Метрику, файлы cookie и Вебвизор, который может записывать действия на сайте. Это помогает понять, как сделать сайт удобнее. <a href="{prefix}privacy.html">Подробнее о данных</a>.</p>
+      <p class="consent-hint">Выбор можно изменить внизу страницы в разделе «Настройки аналитики».</p>
+      <div class="consent-actions"><button class="consent-button" type="button" data-consent-deny>Не разрешать</button><button class="consent-button" type="button" data-consent-accept>Разрешить</button></div>
+    </section>'''
 
 
 def page(title, description, content, *, prefix="", path="/", image="assets/images/hero-pasta.jpg", structured=None):
@@ -90,11 +99,13 @@ def page(title, description, content, *, prefix="", path="/", image="assets/imag
   <meta name="twitter:card" content="summary_large_image"><link rel="icon" href="{prefix}assets/favicon.svg" type="image/svg+xml">
   <link rel="stylesheet" href="{prefix}assets/css/styles.css">
   <script>document.documentElement.classList.replace('no-js','js');</script>
+  <script src="{prefix}assets/js/analytics.js" defer></script>
   <script src="{prefix}assets/js/main.js" defer></script>{ld}
 </head>
 <body>{header(prefix)}
 <main id="main">{content}</main>
 {footer(prefix)}
+{consent_banner(prefix)}
 </body></html>'''
 
 
@@ -174,7 +185,16 @@ def about_page():
 
 
 def privacy_page():
-    content = '''<section class="simple-page shell"><div class="breadcrumbs"><a href="index.html">Главная</a><span>/</span><span>Конфиденциальность</span></div><div class="policy-content"><div class="eyebrow"><span></span> ВАЖНАЯ ИНФОРМАЦИЯ</div><h1>Конфиденциальность</h1><p class="simple-lead">Что происходит с данными при использовании сайта «Ложка».</p><div class="prose"><h2>Данные на сайте</h2><p>В текущей версии сайт не содержит форм регистрации и не запрашивает имя, телефон или адрес электронной почты. Поиск и фильтрация рецептов выполняются в браузере; поисковые запросы на наш сервер не отправляются.</p><h2>Cookie и сторонние сервисы</h2><p>В этой версии сайт самостоятельно не устанавливает файлы cookie и не подключает рекламные сети или системы аналитики. Если они появятся, информация на этой странице должна быть обновлена до их подключения.</p><p>Сайт размещён на GitHub Pages. Хостинг может обрабатывать технические данные посетителей в соответствии со своей <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>.</p><h2>Внешние ссылки</h2><p>При переходе на GitHub действуют правила этого сервиса. Чтобы задать вопрос через GitHub Issues, может потребоваться войти в свой аккаунт.</p><h2>Вопросы</h2><p>Если вы хотите связаться с владельцем сайта, воспользуйтесь <a href="https://github.com/DenWot434536/denwot434536.github.io/issues" target="_blank" rel="noopener noreferrer">страницей проекта на GitHub</a>.</p></div></div></section>'''
+    content = '''<section class="simple-page shell"><div class="breadcrumbs"><a href="index.html">Главная</a><span>/</span><span>Конфиденциальность</span></div>
+    <div class="policy-content"><div class="eyebrow"><span></span> ВАЖНАЯ ИНФОРМАЦИЯ</div><h1>Конфиденциальность</h1>
+    <p class="simple-lead">Что происходит с данными при использовании сайта «Ложка».</p><div class="prose">
+    <h2>Данные на сайте</h2><p>Сайт не содержит форм регистрации и не запрашивает имя, телефон или адрес электронной почты. Поиск и фильтрация рецептов работают в браузере; поисковые запросы не отправляются на сервер сайта.</p>
+    <h2>Яндекс Метрика и Вебвизор</h2><p>С вашего разрешения на сайте работает Яндекс Метрика — сервис статистики посещений. Он может использовать файлы cookie и собирать техническую информацию, например IP-адрес, сведения о браузере и устройстве, просмотренные страницы и переходы. Включённая в счётчике функция Вебвизор может записывать действия на странице, в том числе взаимодействие с полями ввода.</p>
+    <p>До вашего разрешения код Метрики не загружается. Вы можете отказаться или изменить решение через «Настройки аналитики» внизу любой страницы. При отказе дальнейшая отправка данных счётчиком прекращается; уже собранные данные обрабатываются в соответствии с <a href="https://yandex.ru/legal/confidential/" target="_blank" rel="noopener noreferrer">политикой конфиденциальности Яндекса</a>.</p>
+    <button class="privacy-settings privacy-settings-inline" type="button" data-consent-open>Изменить настройки аналитики</button>
+    <h2>Хранение выбора и cookie</h2><p>Ваш выбор сохраняется в локальном хранилище браузера на этом устройстве до изменения или очистки данных сайта. При согласии Яндекс Метрика может создавать файлы cookie. Ранее сохранённые cookie можно удалить в настройках браузера. Рекламные сети на сайте пока не подключены.</p>
+    <h2>Хостинг и внешние ссылки</h2><p>Сайт размещён на GitHub Pages. Хостинг может обрабатывать технические данные посетителей в соответствии со своей <a href="https://docs.github.com/en/site-policy/privacy-policies/github-general-privacy-statement" target="_blank" rel="noopener noreferrer">политикой конфиденциальности</a>. При переходе на GitHub действуют правила этого сервиса. Чтобы задать вопрос через GitHub Issues, может потребоваться войти в свой аккаунт.</p>
+    <h2>Вопросы</h2><p>Если вы хотите связаться с владельцем сайта, воспользуйтесь <a href="https://github.com/DenWot434536/denwot434536.github.io/issues" target="_blank" rel="noopener noreferrer">страницей проекта на GitHub</a>.</p></div></div></section>'''
     return page("Конфиденциальность — Ложка", "Информация о данных посетителей и работе сайта «Ложка».", content, path="/privacy.html")
 
 

@@ -110,6 +110,26 @@ class SiteTests(unittest.TestCase):
         expected.update(BASE + "/recipes/" + r["slug"] + ".html" for r in RECIPES)
         self.assertEqual(urls, expected)
 
+    def test_analytics_and_consent_are_available_on_every_page(self):
+        for page, parsed in self.parsed.items():
+            with self.subTest(page=page.name):
+                self.assertIn("consent-banner", parsed.ids)
+                self.assertEqual(sum(ref.endswith("assets/js/analytics.js") for ref in parsed.references), 1)
+                markup = page.read_text(encoding="utf-8")
+                self.assertIn("data-consent-accept", markup)
+                self.assertIn("data-consent-deny", markup)
+                self.assertIn("data-consent-open", markup)
+                # A no-JS tracking pixel would bypass the visitor's choice.
+                self.assertNotIn("mc.yandex.ru/watch/", markup)
+
+    def test_privacy_page_describes_the_counter(self):
+        privacy = (ROOT / "privacy.html").read_text(encoding="utf-8")
+        self.assertIn("Яндекс Метрика", privacy)
+        self.assertIn("Вебвизор", privacy)
+        self.assertIn("До вашего разрешения код Метрики не загружается", privacy)
+        self.assertNotIn("не подключает рекламные сети или системы аналитики", privacy)
+        self.assertIn("113844022", (ROOT / "assets/js/analytics.js").read_text(encoding="utf-8"))
+
     def test_existing_yandex_verification_is_preserved(self):
         self.assertIn("Verification: f4b4cc3b4aabe9d9", (ROOT / "yandex_f4b4cc3b4aabe9d9.html").read_text(encoding="utf-8"))
 
