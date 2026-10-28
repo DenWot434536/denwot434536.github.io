@@ -64,3 +64,19 @@ h1,h2,h3,p{margin-top:0}h1,h2,h3{font-family:var(--serif);font-weight:600;line-h
 @media(max-width:350px){.shell{width:calc(100% - 28px)}.hero h1{font-size:56px}.hero-actions{gap:12px}.button{gap:13px;padding:12px 14px}.category-text small{display:none}.filter-list{margin-right:-14px;padding-right:14px}.recipe-card h3{font-size:21px}.card-read{letter-spacing:0}.results-line>span{display:none}}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{transition-duration:.01ms!important;animation-duration:.01ms!important;animation-iteration-count:1!important}}
 @media print{.announcement,.site-header,.site-footer,.breadcrumbs,.print-button,.detail-image,.detail-bottom,.photo-note{display:none!important}.shell{width:100%}.detail-intro{display:block;padding:0 0 20px}.detail-copy h1{font-size:34px;margin:0 0 10px}.detail-meta{margin:15px 0}.recipe-content{display:block;padding:15px 0;border:0}.ingredients-card{background:#fff;padding:0 0 20px}.ingredients-card h2,.directions h2{font-size:26px}.ingredients-card li{padding:5px 0}.steps li{padding:8px 0}.tip-box{background:#fff;border:1px solid #bbb;break-inside:avoid}body{font-size:11px}}
+
+/* Optional analytics: the banner is hidden until the consent script runs. */
+.privacy-settings{border:0;padding:0;background:transparent;color:#53594e;font:700 11px/1.6 var(--sans);text-align:left;cursor:pointer}
+.privacy-settings:hover{color:var(--rust)}
+.privacy-settings-inline{margin:4px 0 0;font-size:13px;text-decoration:underline;text-underline-offset:3px}
+.no-js .privacy-settings{display:none}
+.consent-banner{position:fixed;z-index:80;right:24px;bottom:24px;width:min(420px,calc(100% - 48px));max-height:calc(100vh - 48px);max-height:calc(100dvh - 48px);overflow:auto;background:#faf9f3;border:1px solid #d0d5c7;box-shadow:0 15px 45px #30382b30;padding:22px 24px;color:var(--ink)}
+.consent-banner h2{font-size:27px;line-height:1.05;margin:0 0 10px}
+.consent-banner p{font-size:12px;line-height:1.7;color:#4f574a;margin:0}
+.consent-banner p a{text-decoration:underline;text-underline-offset:3px;font-weight:700}
+.consent-banner .consent-hint{font-size:11px;color:#697265;margin-top:8px}
+.consent-actions{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:17px}
+.consent-button{min-height:42px;padding:9px 12px;background:#fff;border:1px solid #78846e;color:#354235;font-size:11px;font-weight:800;cursor:pointer;transition:background .2s,color .2s}
+.consent-button:hover{background:var(--olive-dark);color:#fff}
+@media(max-width:600px){.consent-banner{right:12px;bottom:12px;width:calc(100% - 24px);max-height:calc(100vh - 24px);max-height:calc(100dvh - 24px);padding:18px}.consent-banner h2{font-size:25px}}
+@media print{.consent-banner,.privacy-settings{display:none!important}}
